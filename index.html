@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vem de Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #logo {
+            width: 200px; /* Ajuste a largura conforme necessário */
+            margin: 0 auto; /* Centralizar a imagem na página */
+            display: block;
+        }
+
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #pergunta {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .opcao {
+            display: block;
+            margin: 10px auto;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <img id="logo" src="fmp.png" alt="Descrição da imagem">
+
+    <div class="quiz-container">
+        <h1>Vem de Quiz FMPers</h1>
+        <div id="pergunta"></div>
+
+        <div id="opcoes" class="opcao"></div>
+
+        <button onclick="verificarResposta()">Verificar Resposta</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        const perguntas = [
+            {
+                pergunta: "Onde fica a sede da FMP",
+                opcoes: ["Palhoça", "São José", "Praia de Fora", "Praia do Pontal"],
+                resposta: "Palhoça"
+            },
+            {
+                pergunta: "Quando a FMP foi fundada?",
+                opcoes: ["2023", "2005", "2006", "2000"],
+                resposta: "2005"
+            },
+            {
+                pergunta: "Quantos cursos oferece a FMP?",
+                opcoes: ["4", "2", "3", "1"],
+                resposta: "3"
+            },
+            {
+                pergunta: "Qual curso foi retirado do currículo da FMP?",
+                opcoes: ["ADS", "ADM", "Turismo", "Pedagogia"],
+                resposta: "Turismo"
+            },
+            {
+                pergunta: "Qual o melhor dos cursos oferecidos pela FMP?",
+                opcoes: ["Turismo", "Pedagogia", "ADS", "ADM"],
+                resposta: "ADS"
+            }
+        ];
+
+        let perguntaAtual = 0;
+
+        function carregarPergunta() {
+            const perguntaElemento = document.getElementById("pergunta");
+            const opcoesElemento = document.getElementById("opcoes");
+
+            perguntaElemento.textContent = perguntas[perguntaAtual].pergunta;
+            opcoesElemento.innerHTML = "";
+
+            perguntas[perguntaAtual].opcoes.forEach(opcao => {
+                const opcaoElemento = document.createElement("input");
+                opcaoElemento.type = "radio";
+                opcaoElemento.name = "opcao";
+                opcaoElemento.value = opcao;
+                opcaoElemento.classList.add("opcao");
+                opcaoElemento.required = true;
+
+                const labelElemento = document.createElement("label");
+                labelElemento.textContent = opcao;
+
+                opcoesElemento.appendChild(opcaoElemento);
+                opcoesElemento.appendChild(labelElemento);
+            });
+        }
+
+        function verificarResposta() {
+            const opcoesSelecionadas = document.querySelectorAll('input[name="opcao"]:checked');
+            if (opcoesSelecionadas.length === 0) {
+                alert("Por favor, selecione uma opção.");
+                return;
+            }
+
+            const respostaUsuario = opcoesSelecionadas[0].value;
+            const respostaCorreta = perguntas[perguntaAtual].resposta;
+
+            const resultadoElemento = document.getElementById("resultado");
+            if (respostaUsuario === respostaCorreta) {
+                resultadoElemento.textContent = "Resposta correta!";
+            } else {
+                resultadoElemento.textContent = `Resposta incorreta. A resposta correta é: ${respostaCorreta}`;
+            }
+
+            perguntaAtual++;
+
+            if (perguntaAtual < perguntas.length) {
+                carregarPergunta();
+            } else {
+                resultadoElemento.textContent += " Fim do Jogo!";
+            }
+        }
+
+        carregarPergunta();
+    </script>
+
+</body>
+</html>
+
+    <script>
+        // Seu código JavaScript permanece inalterado
+    </script>
+
+</body>
+</html>
